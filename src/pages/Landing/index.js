@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import './styles.css';
 import api from '../../services/api';
@@ -13,8 +13,10 @@ function Landing() {
 
   function onChangeHandler(event) {
     var files = event.target.files
+
+    console.log(files);
     // if return true allow to setState
-    setSelectedFile(files);
+    setSelectedFile(files[0]);
   }
 
   function onClickHandler() {
@@ -31,6 +33,7 @@ function Landing() {
         //toast.success('upload success')
       })
       .catch(err => { // then print response status
+        console.log (err);
         //toast.error('upload fail')
       })
   }
@@ -44,17 +47,17 @@ function Landing() {
           <h2>Sua plataforma de doação de sangue</h2>
         </div>
 
-        <div class="row">
-          <div class="offset-md-3 col-md-6">
-            <div class="form-group files">
+        <div className="row">
+          <div className="offset-md-3 col-md-6">
+            <div className="form-group files">
               <label>Upload Your File </label>
-              <input type="file" class="form-control" onChange={onChangeHandler} />
+              <input type="file" className="form-control" onChange={onChangeHandler} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               {/* <ToastContainer /> */}
               <Progress max="100" color="success" value={loaded} >{Math.round(loaded, 2)}%</Progress>
             </div>
-            <button type="button" class="btn btn-success btn-block" onClick={onClickHandler}>Upload</button>
+            <button type="button" className="btn btn-success btn-block" onClick={onClickHandler}>Upload</button>
           </div>
         </div>
       </div>
