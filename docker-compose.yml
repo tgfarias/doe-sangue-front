@@ -1,0 +1,15 @@
+version: '3'
+services:
+  doe-sangue:
+    container_name: doe-sangue
+    build: ./
+    stdin_open: true
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    volumes: 
+      - ./public:/usr/ui/public
+      - ./src:/usr/ui/src
+      - /usr/ui/node_modules
+    command: npm start
