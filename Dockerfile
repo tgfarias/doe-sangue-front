@@ -13,14 +13,14 @@ ENV PATH="/usr/ui/node_modules/.bin:$PATH"
 
 USER node
 
-RUN yarn
+RUN npm update
 
 COPY --chown=node:node . .
 
 EXPOSE 3000
 
 # Building app
-RUN yarn start
+RUN npm start
 
 # Running the app
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start" ]

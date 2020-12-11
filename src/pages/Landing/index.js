@@ -8,29 +8,22 @@ import { Progress } from 'reactstrap';
 
 function Landing() {
 
-  this.state = {
-    selectedFile: null,
-    loaded: 0
-  }
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loaded, setLoaded] = useState(0);
 
-  onChangeHandler = event => {
+  function onChangeHandler(event) {
     var files = event.target.files
     // if return true allow to setState
-    this.setState({
-      selectedFile: files,
-      loaded: 0
-    })
+    setSelectedFile(files);
   }
 
-  onClickHandler = () => {
+  function onClickHandler() {
     const data = new FormData()
-    data.append('file', this.state.selectedFile)
+    data.append('file', selectedFile)
 
     api.post("api/file/uploadFile", data, {
       onUploadProgress: ProgressEvent => {
-        this.setState({
-          loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
-        })
+        setLoaded((ProgressEvent.loaded / ProgressEvent.total * 100));
       },
     })
       .then(res => { // then print response status
@@ -40,7 +33,7 @@ function Landing() {
       .catch(err => { // then print response status
         //toast.error('upload fail')
       })
-  };
+  }
 
   return (
     <div id="page-landing">
@@ -55,18 +48,14 @@ function Landing() {
           <div class="offset-md-3 col-md-6">
             <div class="form-group files">
               <label>Upload Your File </label>
-              <input type="file" class="form-control" onChange={this.onChangeHandler} />
+              <input type="file" class="form-control" onChange={onChangeHandler} />
             </div>
             <div class="form-group">
               {/* <ToastContainer /> */}
-              <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded, 2)}%</Progress>
-
+              <Progress max="100" color="success" value={loaded} >{Math.round(loaded, 2)}%</Progress>
             </div>
-
-            <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-
+            <button type="button" class="btn btn-success btn-block" onClick={onClickHandler}>Upload</button>
           </div>
-
         </div>
       </div>
       </div>
